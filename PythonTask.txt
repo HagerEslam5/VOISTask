@@ -1,0 +1,33 @@
+import pandas as pd
+
+# Load data into a DataFrame
+data = {
+    'Name': ['Mark', 'John', 'Edward', 'Salah', 'Ahmed', 'Sara', 'Julia', 'John', 'Mark'],
+    'Gender': ['M', 'M', 'M', 'M', 'M', 'F', 'F', 'M', 'M'],
+    'Age': [20.365, 60.3226, 42.265, 31.38, 42.68, 25.364, 21.2857, 60.3226, 20.365],
+    'Salary(USD)': [1000, 1200, 3000, 5000, 1700, 1900, 1950, 1200, 1000]
+}
+
+df = pd.DataFrame(data)
+
+# 1. Remove duplicates
+df = df.drop_duplicates()
+
+# 2. Remove decimal places in the Age column
+df['Age'] = df['Age'].astype(int)
+
+# 3. Convert USD salary to EGP (Assuming 1 USD = 16.8 EGP)
+df['Salary(EGP)'] = df['Salary(USD)'] * 16.8
+
+# 4. Print stats
+print("Average Age:", df['Age'].mean())
+print("Median Salaries:", df['Salary(USD)'].median())
+gender_ratio = df['Gender'].value_counts(normalize=True)
+print("Ratio between males and females:", gender_ratio['M'] / gender_ratio['F'])
+
+# 5. Write the data to a new CSV file
+df.to_csv('output_data.csv', index=False)
+
+# Display the modified DataFrame
+print("\nModified DataFrame:")
+print(df)
